@@ -40,7 +40,9 @@ broot.ingress.mod.Entry:
     PortalUpgrade_onDispose: [null, V]
     PortalUpgrade_getResonatorBrowserHeight: [null, I, I]
     ParticleEnergyGlobVisuals_getTimeSec: [null, F, F]
-    PortalParticleRender_shouldDrawParticles: [null, Z, $PortalParticleRender, Z]
+    PortalParticleRender_saveTempData: [null, V, $PortalParticleRender, $GameState]
+    PortalParticleRender_savePortal: [null, V, $Portal]
+    PortalParticleRender_tweakParameters: [null, $PortalParticleParameters, $PortalParticleParameters]
     ShieldShader_getRampTargetInvWidthX: [null, F, F]
     ShieldShader_getRampTargetInvWidthY: [null, F, F]
     HackAnimationStage_getTotalTime: [null, F, F]
@@ -71,6 +73,9 @@ broot.ingress.mod.Entry:
 
 com.nianticproject.ingress.common.model.GameState:
   is_real_name: true
+
+  fields:
+    changedEntities: [changedEntities, $ImmutableSet]
 
 com.nianticproject.ingress.common.model.PlayerModel:
   methods:
@@ -116,6 +121,19 @@ com.nianticproject.ingress.gameentity.components.ItemRarity:
 com.nianticproject.ingress.gameentity.components.FlipCardType:
   is_enum: true
   find_by_string: ADA Refactor
+
+com.nianticproject.ingress.gameentity.components.Portal:
+  is_real_name: true
+
+com.nianticproject.ingress.gameentity.components.Levelable:
+  methods:
+    getLevel: [getLevel, I]
+    getLevelName: [getLevelName, $String]
+
+  find:
+    - [by_method, false, true, getLevel]
+    - [by_method, false, true, getLevelName]
+    - [by_string, false, true, 'public interface abstract']
 
 ### SHARED
 
@@ -482,11 +500,30 @@ com.nianticproject.ingress.common.scanner.NoPortalsScannerState:
     - [by_string, false, true, $ScannerStateManager->togglePortalVectors()]
 
 com.nianticproject.ingress.common.scanner.visuals.PortalParticleRender:
+  methods:
+    setGameState: [a, V, $GameState]
+
   fields:
     enabled: [a, Z]
 
   find:
     - [by_string, false, true, Portal Particle Render]
+    - [by_method, false, true, setGameState]
+
+com.nianticproject.ingress.common.scanner.visuals.PortalParticleParameters:
+  methods:
+    init: [<init>, V, $PortalParticleRender, $S2LatLng, $Color, I, F, F, F, F]
+
+  fields:
+    renderer: [a, $PortalParticleRender]
+    latlng: [b, $S2LatLng]
+    color: [d, $Color]
+
+  find:
+    - [by_method, false, true, init]
+    - [by_field, false, true, renderer]
+    - [by_field, false, true, latlng]
+    - [by_field, false, true, color]
 
 #com.nianticproject.ingress.common.scanner.visuals.EnergyGlobVisuals:
 #  fields:
@@ -556,7 +593,7 @@ com.nianticproject.ingress.common.ui.elements.PortalInfoDialog:
   super: $UiLayer
 
   fields:
-    portalComponent: [s, Lcom/nianticproject/ingress/gameentity/components/Portal;]
+    portalComponent: [s, $Portal]
 
   methods:
     onPlayerLocationChanged: [l, V]
@@ -751,7 +788,13 @@ com.google.common.geometry.S2LatLng:
 
   find_by_string: 0x415849c600000000L
 
+com.google.common.collect.ImmutableSet:
+  obf_name: com.google.b.c.du
+
 ### LIBGDX
+
+com.badlogic.gdx.graphics.Color:
+  is_real_name: true
 
 com.badlogic.gdx.scenes.scene2d.Actor:
   is_real_name: true

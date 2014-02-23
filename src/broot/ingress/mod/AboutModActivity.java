@@ -251,6 +251,7 @@ public class AboutModActivity extends BaseSubActivity {
 					public void clicked(final InputEvent event, final float x, final float y) {
 						Config.invertBooleanPreference(Pref.PortalParticlesEnabled);
 						updateValues();
+						Mod.updateScannerContent();
 					}
 				});
 				uiTweaksItem.addButton(Pref.ScannerObjectsEnabled, new ClickListener() {

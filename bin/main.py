@@ -179,8 +179,24 @@ def main():
 
     #portal particles
     edit = edit_cls('PortalParticleRender')
-    edit.find_line(' sget-boolean v0, %s' % expr('$PortalParticleRender->enabled', regex=True))
-    edit.add_invoke_entry('PortalParticleRender_shouldDrawParticles', 'p0, v0', 'v0')
+    edit.prepare_after_prologue('setGameState')
+    edit.add_line(' move-object/from16 v0, p0')
+    edit.add_line(' move-object/from16 v1, p1')
+    edit.add_invoke_entry('PortalParticleRender_saveTempData', 'v0, v1')
+    edit.find_line(' check-cast v1, %s' % expr_type('$Portal'))
+    edit.find_line(' if-eqz v1, .*', where='down')
+    edit.prepare_to_insert()
+    edit.add_invoke_entry('PortalParticleRender_savePortal', 'v1')
+    edit.find_line(' invoke-direct/range \{v1 .. v9\}, %s' % expr('$PortalParticleParameters->init()', regex=True))
+    edit.prepare_to_insert()
+    edit.add_invoke_entry('PortalParticleRender_tweakParameters', 'v1', 'v1')
+    edit.save()
+
+    edit = edit_cls('PortalParticleParameters')
+    edit.mod_class_def('public')
+    edit.mod_field_def('renderer', 'public')
+    edit.mod_field_def('latlng', 'public')
+    edit.mod_field_def('color', 'public')
     edit.save()
 
     #disable xm flow

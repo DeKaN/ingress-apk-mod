@@ -25,9 +25,12 @@ import com.nianticproject.ingress.common.app.NemesisMemoryCache;
 import com.nianticproject.ingress.common.app.NemesisWorld;
 import com.nianticproject.ingress.common.assets.AssetFinder;
 import com.nianticproject.ingress.common.inventory.MenuControllerImpl;
+import com.nianticproject.ingress.common.model.GameState;
 import com.nianticproject.ingress.common.scanner.ScannerStateManager;
+import com.nianticproject.ingress.common.scanner.visuals.PortalParticleRender;
 import com.nianticproject.ingress.common.ui.elements.PortalInfoDialog;
 import com.nianticproject.ingress.common.ui.elements.AvatarPlayerStatusBar;
+import com.nianticproject.ingress.gameentity.components.Portal;
 
 public class Mod {
 
@@ -40,10 +43,14 @@ public class Mod {
 	public static Skin                  skin;
 	public static ScannerStateManager   scannerStateManager;
 
+	public static PortalParticleRender  tempPortalParticleRender;
+	public static GameState             tempGameState;
+	public static Portal                tempPortalComponent;
+
 	public static PortalInfoDialog      portalInfoDialog;
-    public static AvatarPlayerStatusBar avatarPlayerStatusBar;
-    public static long lastTap;
-    public static boolean statusBarIsVisible;
+	public static AvatarPlayerStatusBar avatarPlayerStatusBar;
+	public static long lastTap;
+	public static boolean statusBarIsVisible;
 
 	public static DisplayMetrics        displayMetrics;
 	public static UiVariant             currUiVariant;
@@ -67,6 +74,10 @@ public class Mod {
 
 	public static void onConfigLoaded() {
 		// EnergyGlobVisuals.initEnabled = Config.xmGlobsEnabled;
+	}
+
+	public static void updateScannerContent() {
+		Mod.tempPortalParticleRender.setGameState(Mod.tempGameState);
 	}
 
 	public static void restartApp() {

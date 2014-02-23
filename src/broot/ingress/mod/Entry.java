@@ -38,8 +38,10 @@ import com.nianticproject.ingress.common.assets.AssetFinder;
 import com.nianticproject.ingress.common.inventory.MenuControllerImpl;
 import com.nianticproject.ingress.common.missions.tutorial.TutorialDialog;
 import com.nianticproject.ingress.common.missions.tutorial.TutorialDialogNextListener;
+import com.nianticproject.ingress.common.model.GameState;
 import com.nianticproject.ingress.common.scanner.ScannerActivity;
 import com.nianticproject.ingress.common.scanner.ScannerStateManager;
+import com.nianticproject.ingress.common.scanner.visuals.PortalParticleParameters;
 import com.nianticproject.ingress.common.scanner.visuals.PortalParticleRender;
 import com.nianticproject.ingress.common.ui.BaseSubActivity;
 import com.nianticproject.ingress.common.ui.FormatUtils;
@@ -48,6 +50,7 @@ import com.nianticproject.ingress.common.ui.elements.PortalInfoDialog;
 import com.nianticproject.ingress.common.ui.widget.MenuTabId;
 import com.nianticproject.ingress.gameentity.components.ItemRarity;
 import com.nianticproject.ingress.gameentity.components.LocationE6;
+import com.nianticproject.ingress.gameentity.components.Portal;
 import com.nianticproject.ingress.shared.ClientType;
 import com.nianticproject.ingress.shared.location.LocationUtils;
 
@@ -232,8 +235,26 @@ public class Entry {
 		return Config.getBoolean(Pref.XmFlowEnabled) ? orig : 0;
 	}
 
-	public static boolean PortalParticleRender_shouldDrawParticles(PortalParticleRender renderer, boolean org) {
-		return Config.getBoolean(Pref.PortalParticlesEnabled) && org;
+	public static void PortalParticleRender_saveTempData(PortalParticleRender renderer, GameState state) {
+		Mod.tempPortalParticleRender = renderer;
+		Mod.tempGameState = state;
+		Thread.dumpStack();
+	}
+
+	public static void PortalParticleRender_savePortal(Portal portal) {
+		Mod.tempPortalComponent = portal;
+//		Log.v("broot", Mod.tempPortalComponent.getLevelName());
+	}
+
+	public static PortalParticleParameters PortalParticleRender_tweakParameters(PortalParticleParameters org) {
+		if(Config.getBoolean(Pref.PortalParticlesEnabled)) {
+//		if(Mod.tempPortalComponent.getLevel() == 8) {
+			return org;
+		}
+
+//		Log.v("broot", Mod.tempPortalComponent.getLevelName());
+
+		return new PortalParticleParameters(org.renderer, org.latlng, org.color, 0, 0, 0, 0, 0);
 	}
 
 	public static float PortalInfoDialog_getOpenDelay(final float orig) {
