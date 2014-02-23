@@ -26,7 +26,6 @@ import com.nianticproject.ingress.common.app.NemesisWorld;
 import com.nianticproject.ingress.common.assets.AssetFinder;
 import com.nianticproject.ingress.common.inventory.MenuControllerImpl;
 import com.nianticproject.ingress.common.scanner.ScannerStateManager;
-import com.nianticproject.ingress.common.scanner.visuals.PortalParticleRender;
 import com.nianticproject.ingress.common.ui.elements.PortalInfoDialog;
 import com.nianticproject.ingress.common.ui.elements.AvatarPlayerStatusBar;
 
@@ -67,7 +66,6 @@ public class Mod {
 	}
 
 	public static void onConfigLoaded() {
-		PortalParticleRender.enabled = Config.getBoolean(Pref.PortalParticlesEnabled);
 		// EnergyGlobVisuals.initEnabled = Config.xmGlobsEnabled;
 	}
 

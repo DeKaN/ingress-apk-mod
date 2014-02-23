@@ -177,6 +177,12 @@ def main():
     edit.add_invoke_entry('HackAnimationStage_getTotalTime', edit.vars[0], edit.vars[0])
     edit.save()
 
+    #portal particles
+    edit = edit_cls('PortalParticleRender')
+    edit.find_line(' sget-boolean v0, %s' % expr('$PortalParticleRender->enabled', regex=True))
+    edit.add_invoke_entry('PortalParticleRender_shouldDrawParticles', 'p0, v0', 'v0')
+    edit.save()
+
     #disable xm flow
     edit = edit_cls('ParticleEnergyGlobVisuals')
     edit.find_line(r' const-string/jumbo v0, "u_timeSec"')

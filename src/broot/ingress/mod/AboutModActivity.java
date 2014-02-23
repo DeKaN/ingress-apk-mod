@@ -20,7 +20,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.esotericsoftware.tablelayout.Value;
 import com.nianticproject.ingress.common.scanner.ScannerStateManager;
-import com.nianticproject.ingress.common.scanner.visuals.PortalParticleRender;
 import com.nianticproject.ingress.common.ui.BaseSubActivity;
 import com.nianticproject.ingress.common.ui.UiLayer;
 import com.nianticproject.ingress.common.ui.widget.MenuTabId;
@@ -252,7 +251,6 @@ public class AboutModActivity extends BaseSubActivity {
 					public void clicked(final InputEvent event, final float x, final float y) {
 						Config.invertBooleanPreference(Pref.PortalParticlesEnabled);
 						updateValues();
-						PortalParticleRender.enabled = Config.getBoolean(Pref.PortalParticlesEnabled);
 					}
 				});
 				uiTweaksItem.addButton(Pref.ScannerObjectsEnabled, new ClickListener() {

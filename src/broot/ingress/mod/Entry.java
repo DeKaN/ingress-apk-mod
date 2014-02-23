@@ -40,6 +40,7 @@ import com.nianticproject.ingress.common.missions.tutorial.TutorialDialog;
 import com.nianticproject.ingress.common.missions.tutorial.TutorialDialogNextListener;
 import com.nianticproject.ingress.common.scanner.ScannerActivity;
 import com.nianticproject.ingress.common.scanner.ScannerStateManager;
+import com.nianticproject.ingress.common.scanner.visuals.PortalParticleRender;
 import com.nianticproject.ingress.common.ui.BaseSubActivity;
 import com.nianticproject.ingress.common.ui.FormatUtils;
 import com.nianticproject.ingress.common.ui.elements.AvatarPlayerStatusBar;
@@ -229,6 +230,10 @@ public class Entry {
 
 	public static float ParticleEnergyGlobVisuals_getTimeSec(final float orig) {
 		return Config.getBoolean(Pref.XmFlowEnabled) ? orig : 0;
+	}
+
+	public static boolean PortalParticleRender_shouldDrawParticles(PortalParticleRender renderer, boolean org) {
+		return Config.getBoolean(Pref.PortalParticlesEnabled) && org;
 	}
 
 	public static float PortalInfoDialog_getOpenDelay(final float orig) {
