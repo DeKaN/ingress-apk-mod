@@ -81,10 +81,16 @@ com.nianticproject.ingress.common.model.PlayerModel:
     addListener: [a, V, $PlayerListener]
     removeListener: [b, V, $PlayerListener]
     getName: [j, $String]
+    getGuid: [k, $String]
     getCurrentXM: [d, J]
     getCurrentAP: [e, J]
 
-  find_interface_of: $PlayerModelImpl
+  find:
+    - [interface_of, false, true, $PlayerModelImpl]
+    - [by_method, false, true, getName]
+    - [by_method, false, true, getGuid]
+    - [by_method, false, true, getCurrentXM]
+    - [by_method, false, true, getCurrentAP]
 
 com.nianticproject.ingress.common.model.PlayerModelImpl:
   super: $PlayerModel
@@ -786,8 +792,14 @@ com.google.common.geometry.S2LatLng:
 
   find_by_string: 0x415849c600000000L
 
+com.google.common.collect.ImmutableMap:
+  obf_name: com.google.b.c.dh
+
 com.google.common.collect.ImmutableSet:
   obf_name: com.google.b.c.du
+
+com.google.common.collect.Multiset:
+  obf_name: com.google.b.c.hs
 
 ### LIBGDX
 

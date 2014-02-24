@@ -62,11 +62,11 @@ public class AboutModActivity extends BaseSubActivity {
 		public ListItem(final Skin skin, final String name, final Pref pref, final EventListener listener) {
 			this(skin, name, "");
 			addButton(pref, listener);
-        }
+		}
 
 		public void addButton(final Pref pref, final EventListener listener) {
-	        buttons.put(pref, addButton(pref.getDescription(), Config.getButtonText(pref), listener));
-        }
+			buttons.put(pref, addButton(pref.getDescription(), Config.getButtonText(pref), listener));
+		}
 
 		private TextButton addButton(final String name, final String value, final EventListener listener) {
 			if (buttonsTable == null) {
@@ -246,10 +246,10 @@ public class AboutModActivity extends BaseSubActivity {
 						updateValues();
 					}
 				});
-				uiTweaksItem.addButton(Pref.PortalParticlesEnabled, new ClickListener() {
+				uiTweaksItem.addButton(Pref.PortalParticles, new ClickListener() {
 					@Override
 					public void clicked(final InputEvent event, final float x, final float y) {
-						Config.invertBooleanPreference(Pref.PortalParticlesEnabled);
+						Config.setNextValue(Pref.PortalParticles);
 						updateValues();
 					}
 				});

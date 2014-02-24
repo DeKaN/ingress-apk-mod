@@ -83,6 +83,21 @@ public class Config {
 		}
 	}
 
+	public static enum PortalParticles {
+		ALL("All"), NONE("None"), WITHOUT_R8("Without my R8"), L8("L8"), WITH_KEYS("With keys");
+
+		private final String desc;
+
+		private PortalParticles(final String desc) {
+			this.desc = desc;
+		}
+
+		@Override
+		public String toString() {
+			return desc;
+		}
+	}
+
 	public static enum Pref {
 		SwapTouchMenuButtons(0, "Swap NAV/FIRE"),
 		ItemsTab(0, "[ITEMS]", ItemsTab.class),
@@ -101,7 +116,7 @@ public class Config {
 		ShieldAnimEnabled(1, "Shield Animation"),
 		Fullscreen(0, "Fullscreen"),
 		ShowPortalVectors(1, "Portal vectors"),
-		PortalParticlesEnabled(1, "Portal particles"),
+		PortalParticles(1, "Portal particles", PortalParticles.class),
 		XmGlobsEnabled(1, ""),
 		ScannerObjectsEnabled(1, "Scanner objects"),
 		SimplifyInventoryItems(0, "Simplify Items"),

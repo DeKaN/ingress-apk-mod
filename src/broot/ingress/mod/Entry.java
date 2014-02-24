@@ -15,6 +15,7 @@ import broot.ingress.mod.util.Config;
 import broot.ingress.mod.util.Config.AllowModRecycle;
 import broot.ingress.mod.util.Config.ChatTimeFormat;
 import broot.ingress.mod.util.Config.GpsLockTime;
+import broot.ingress.mod.util.Config.PortalParticles;
 import broot.ingress.mod.util.Config.Pref;
 import broot.ingress.mod.util.InventoryUtils;
 import broot.ingress.mod.util.MenuUtils;
@@ -235,20 +236,31 @@ public class Entry {
 		return Config.getBoolean(Pref.XmFlowEnabled) ? orig : 0;
 	}
 
+	private static boolean ShouldHighlightPortal(Portal portal) {
+		final PortalParticles particles = Config.getEnumValue(Pref.PortalParticles);
+
+		switch(particles) {
+			case ALL:
+				return true;
+			case NONE:
+				return false;
+			case L8:
+				return portal.getLevel() == 8;
+			case WITH_KEYS:
+				return InventoryUtils.getNumberOfPortalKeys(portal) > 0;
+		}
+
+		return false;
+	}
+
 	public static PortalParticleParameters PortalParticleRender_tweakParameters(PortalParticleParameters org) {
-		if(Config.getBoolean(Pref.PortalParticlesEnabled)) {
+		if(ShouldHighlightPortal(org.portalComponent)) {
 			return org;
 		}
 
-		if(org.portalComponent.getLevel() == 8) {
-			return org;
-		}
-
-//		Log.v("broot", Mod.tempPortalComponent.getLevelName());
-
-		PortalParticleParameters p = new PortalParticleParameters(org.renderer, org.latlng, org.color, 0, 0, 0, 0, 0);
-		p.portalComponent = org.portalComponent;
-		return p;
+		PortalParticleParameters noParticles = new PortalParticleParameters(org.renderer, org.latlng, org.color, 0, 0, 0, 0, 0);
+		noParticles.portalComponent = org.portalComponent;
+		return noParticles;
 	}
 
 	public static float PortalInfoDialog_getOpenDelay(final float orig) {
