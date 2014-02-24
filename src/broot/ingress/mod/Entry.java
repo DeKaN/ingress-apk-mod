@@ -1,14 +1,12 @@
 package broot.ingress.mod;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Application;
 import android.content.Context;
 import android.os.PowerManager;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.WindowManager;
 import broot.ingress.mod.BuildConfig.UiVariant;
 import broot.ingress.mod.util.Config;
@@ -29,7 +27,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.esotericsoftware.tablelayout.Cell;
-import com.esotericsoftware.tablelayout.Value;
 import com.nianticproject.ingress.NemesisActivity;
 import com.nianticproject.ingress.common.ComponentManager;
 import com.nianticproject.ingress.common.app.NemesisMemoryCache;
@@ -39,11 +36,9 @@ import com.nianticproject.ingress.common.assets.AssetFinder;
 import com.nianticproject.ingress.common.inventory.MenuControllerImpl;
 import com.nianticproject.ingress.common.missions.tutorial.TutorialDialog;
 import com.nianticproject.ingress.common.missions.tutorial.TutorialDialogNextListener;
-import com.nianticproject.ingress.common.model.GameState;
 import com.nianticproject.ingress.common.scanner.ScannerActivity;
 import com.nianticproject.ingress.common.scanner.ScannerStateManager;
 import com.nianticproject.ingress.common.scanner.visuals.PortalParticleParameters;
-import com.nianticproject.ingress.common.scanner.visuals.PortalParticleRender;
 import com.nianticproject.ingress.common.ui.BaseSubActivity;
 import com.nianticproject.ingress.common.ui.FormatUtils;
 import com.nianticproject.ingress.common.ui.elements.AvatarPlayerStatusBar;
@@ -139,7 +134,7 @@ public class Entry {
 
 	public static boolean MenuControllerImpl_onSelectTab(MenuControllerImpl controller, final MenuTabId tabId) {
 		Class<?> newActivityClass = MenuUtils.getActivityClassForMenuTabId(tabId);
-		if(newActivityClass == null) {
+		if (newActivityClass == null) {
 			return false;
 		}
 
@@ -239,28 +234,30 @@ public class Entry {
 	private static boolean ShouldHighlightPortal(Portal portal) {
 		final PortalParticles particles = Config.getEnumValue(Pref.PortalParticles);
 
-		switch(particles) {
+		switch (particles) {
 			case ALL:
 				return true;
 			case NONE:
 				return false;
 			case WITHOUT_R8:
-				return !portal.resonatorLevelsForOwner(ComponentManager.getPlayerModel().getGuid()).contains(8) && portal.getLevel() < 8;
+				return !portal.resonatorLevelsForOwner(ComponentManager.getPlayerModel().getGuid()).contains(8)
+				        && portal.getLevel() < 8;
 			case L8:
 				return portal.getLevel() == 8;
-//			case WITH_KEYS:
-//				return InventoryUtils.getNumberOfPortalKeys(portal) > 0;
+				// case WITH_KEYS:
+				// return InventoryUtils.getNumberOfPortalKeys(portal) > 0;
 		}
 
 		return false;
 	}
 
 	public static PortalParticleParameters PortalParticleRender_tweakParameters(PortalParticleParameters org) {
-		if(ShouldHighlightPortal(org.portalComponent)) {
+		if (ShouldHighlightPortal(org.portalComponent)) {
 			return org;
 		}
 
-		PortalParticleParameters noParticles = new PortalParticleParameters(org.renderer, org.latlng, org.color, 0, 0, 0, 0, 0);
+		PortalParticleParameters noParticles = new PortalParticleParameters(org.renderer, org.latlng, org.color, 0, 0,
+		        0, 0, 0);
 		noParticles.portalComponent = org.portalComponent;
 		return noParticles;
 	}
@@ -290,21 +287,9 @@ public class Entry {
 		final Label.LabelStyle style = Mod.skin.get("portal-stats", Label.LabelStyle.class);
 		final Label.LabelStyle keyExistsStyle = Mod.skin.get("small-yellow", Label.LabelStyle.class);
 
-		final List<Cell> cells = new ArrayList<Cell>(t.getCells());
-		final List<Object> widgets = new ArrayList<Object>();
-		for (int i = 0; i < cells.size(); i++) {
-			widgets.add(cells.get(i).getWidget());
-		}
-		t.clear();
-		t.add((Actor) widgets.get(0)).left();
-		t.add((Actor) widgets.get(1)).left().expandX();
-		t.row();
-		t.add((Actor) widgets.get(3)).left();
-		t.add((Actor) widgets.get(4)).left().expandX();
-		t.row();
+		final List<Cell> cells = t.getCells();
 		final int keys = InventoryUtils.getNumberOfPortalKeys(dialog.portalComponent);
-		t.add(new Label("Keys:", keys > 0 ? keyExistsStyle : style)).left();
-		t.add(new Label(String.valueOf(keys), keys > 0 ? keyExistsStyle : style)).left().expandX();
+		cells.get(2).setWidget(new Label(String.valueOf(keys), keys > 0 ? keyExistsStyle : style));
 		t.row();
 		t.add(new Label("Dist.:", style)).left();
 		t.add(portalInfoDistLabel = new Label("", style)).left().expandX();
@@ -396,7 +381,7 @@ public class Entry {
 	}
 
 	public static void TutorialDialog_onCreateUi(TutorialDialog dialog, List<Actor> actors) {
-		for(Actor actor : actors) {
+		for (Actor actor : actors) {
 			actor.addListener(new TutorialDialogNextListener(dialog));
 		}
 	}
@@ -405,12 +390,18 @@ public class Entry {
 		return 1;
 	}
 
+	private static void hideCellWidget(Cell cell) {
+		if (cell == null)
+			return;
+		Actor widget = (Actor) cell.getWidget();
+		if (widget != null)
+			widget.setVisible(false);
+	}
+
 	private static void hideLastButton(Table table) {
-	    final List<Cell> cells = table.getCells();
+		final List<Cell> cells = table.getCells();
 		if (cells != null && cells.size() > 0) {
-			Actor lastBtn = (Actor) cells.get(cells.size() - 1).getWidget();
-			if (lastBtn != null)
-				lastBtn.setVisible(false);
+			hideCellWidget(cells.get(cells.size() - 1));
 		}
-    }
+	}
 }

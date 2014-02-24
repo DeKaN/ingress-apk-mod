@@ -896,6 +896,7 @@ com.esotericsoftware.tablelayout.Cell:
     getWidgetY: [r, F]
     getWidgetWidth: [s, F]
     getWidgetHeight: [t, F]
+    setWidget: [a, $Cell, Ljava/lang/Object;]
 
 com.esotericsoftware.tablelayout.Toolkit:
   obf_name: com.a.a.d
