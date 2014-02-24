@@ -8,6 +8,7 @@ public interface PlayerModel {
     public void addListener(PlayerListener listener);
     public void removeListener(PlayerListener listener);
     public String getName();
+    public String getGuid();
     public long getCurrentXM();
     public long getCurrentAP();
 }

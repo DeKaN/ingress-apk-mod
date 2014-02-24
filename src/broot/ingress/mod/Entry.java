@@ -244,10 +244,12 @@ public class Entry {
 				return true;
 			case NONE:
 				return false;
+			case WITHOUT_R8:
+				return !portal.resonatorLevelsForOwner(ComponentManager.getPlayerModel().getGuid()).contains(8);
 			case L8:
 				return portal.getLevel() == 8;
-			case WITH_KEYS:
-				return InventoryUtils.getNumberOfPortalKeys(portal) > 0;
+//			case WITH_KEYS:
+//				return InventoryUtils.getNumberOfPortalKeys(portal) > 0;
 		}
 
 		return false;
