@@ -1,5 +1,7 @@
 package com.nianticproject.ingress.common.scanner.visuals;
 
+import com.nianticproject.ingress.gameentity.components.Portal;
+
 import com.google.common.geometry.S2LatLng;
 import com.badlogic.gdx.graphics.Color;
 
@@ -11,4 +13,6 @@ public final class PortalParticleParameters {
     public PortalParticleRender renderer;
     public S2LatLng latlng;
     public Color color;
+
+    public Portal portalComponent;
 }

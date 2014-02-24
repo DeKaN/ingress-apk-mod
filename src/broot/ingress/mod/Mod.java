@@ -43,10 +43,6 @@ public class Mod {
 	public static Skin                  skin;
 	public static ScannerStateManager   scannerStateManager;
 
-	public static PortalParticleRender  tempPortalParticleRender;
-	public static GameState             tempGameState;
-	public static Portal                tempPortalComponent;
-
 	public static PortalInfoDialog      portalInfoDialog;
 	public static AvatarPlayerStatusBar avatarPlayerStatusBar;
 	public static long lastTap;
@@ -74,10 +70,6 @@ public class Mod {
 
 	public static void onConfigLoaded() {
 		// EnergyGlobVisuals.initEnabled = Config.xmGlobsEnabled;
-	}
-
-	public static void updateScannerContent() {
-		Mod.tempPortalParticleRender.setGameState(Mod.tempGameState);
 	}
 
 	public static void restartApp() {

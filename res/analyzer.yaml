@@ -40,8 +40,6 @@ broot.ingress.mod.Entry:
     PortalUpgrade_onDispose: [null, V]
     PortalUpgrade_getResonatorBrowserHeight: [null, I, I]
     ParticleEnergyGlobVisuals_getTimeSec: [null, F, F]
-    PortalParticleRender_saveTempData: [null, V, $PortalParticleRender, $GameState]
-    PortalParticleRender_savePortal: [null, V, $Portal]
     PortalParticleRender_tweakParameters: [null, $PortalParticleParameters, $PortalParticleParameters]
     ShieldShader_getRampTargetInvWidthX: [null, F, F]
     ShieldShader_getRampTargetInvWidthY: [null, F, F]

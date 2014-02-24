@@ -235,26 +235,20 @@ public class Entry {
 		return Config.getBoolean(Pref.XmFlowEnabled) ? orig : 0;
 	}
 
-	public static void PortalParticleRender_saveTempData(PortalParticleRender renderer, GameState state) {
-		Mod.tempPortalParticleRender = renderer;
-		Mod.tempGameState = state;
-		Thread.dumpStack();
-	}
-
-	public static void PortalParticleRender_savePortal(Portal portal) {
-		Mod.tempPortalComponent = portal;
-//		Log.v("broot", Mod.tempPortalComponent.getLevelName());
-	}
-
 	public static PortalParticleParameters PortalParticleRender_tweakParameters(PortalParticleParameters org) {
 		if(Config.getBoolean(Pref.PortalParticlesEnabled)) {
-//		if(Mod.tempPortalComponent.getLevel() == 8) {
+			return org;
+		}
+
+		if(org.portalComponent.getLevel() == 8) {
 			return org;
 		}
 
 //		Log.v("broot", Mod.tempPortalComponent.getLevelName());
 
-		return new PortalParticleParameters(org.renderer, org.latlng, org.color, 0, 0, 0, 0, 0);
+		PortalParticleParameters p = new PortalParticleParameters(org.renderer, org.latlng, org.color, 0, 0, 0, 0, 0);
+		p.portalComponent = org.portalComponent;
+		return p;
 	}
 
 	public static float PortalInfoDialog_getOpenDelay(final float orig) {
