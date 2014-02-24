@@ -84,7 +84,7 @@ public class Config {
 	}
 
 	public static enum PortalParticles {
-		ALL("All"), NONE("None"), WITHOUT_R8("Without my R8"), L8("L8")/*, WITH_KEYS("With keys")*/;
+		ALL("All"), NONE("None"), WITHOUT_R8("<L8 (no my R8)"), L8("L8")/*, WITH_KEYS("With keys")*/;
 
 		private final String desc;
 
