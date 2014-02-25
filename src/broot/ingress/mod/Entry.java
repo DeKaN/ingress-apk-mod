@@ -1,6 +1,7 @@
 package broot.ingress.mod;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Application;
@@ -299,12 +300,26 @@ public class Entry {
 		final Label.LabelStyle style = Mod.skin.get("portal-stats", Label.LabelStyle.class);
 		final Label.LabelStyle keyExistsStyle = Mod.skin.get("small-yellow", Label.LabelStyle.class);
 
-		final List<Cell> cells = t.getCells();
+		final List<Cell> cells = new ArrayList<Cell>(t.getCells());
+		final List<Object> widgets = new ArrayList<Object>();
+		for (int i = 0; i < cells.size(); i++) {
+			widgets.add(cells.get(i).getWidget());
+		}
+
+		t.clear();
+
+		t.add(new Label("E:", style)).left();
+		t.add((Actor) widgets.get(1)).left().expandX();
 		final int keys = InventoryUtils.getNumberOfPortalKeys(dialog.portalComponent);
-		cells.get(2).setWidget(new Label(String.valueOf(keys), keys > 0 ? keyExistsStyle : style));
+		t.add(new Label(String.valueOf(keys), keys > 0 ? keyExistsStyle : style)).right();
+		t.add((Actor) widgets.get(2)).left();
 		t.row();
-		t.add(new Label("Dist.:", style)).left();
-		t.add(portalInfoDistLabel = new Label("", style)).left().expandX();
+
+		t.add((Actor) widgets.get(4)).colspan(4).left().expandX();
+		t.row();
+		t.add(new Label("Dist.:", style)).colspan(2).left();
+		t.add(portalInfoDistLabel = new Label("", style)).colspan(2).left().expandX();
+		t.row();
 	}
 
 	public static void PowerCubeDetailsUiCreator_onActionButtonsTableCreated(final Table t) {
