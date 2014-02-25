@@ -1,6 +1,7 @@
 package com.nianticproject.ingress.common.model;
 
 import com.nianticproject.ingress.common.PlayerLocation;
+import com.nianticproject.ingress.shared.Faction;
 
 public interface PlayerModel {
 
@@ -11,4 +12,5 @@ public interface PlayerModel {
     public String getGuid();
     public long getCurrentXM();
     public long getCurrentAP();
+    public Faction getFaction();
 }

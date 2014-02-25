@@ -84,6 +84,7 @@ com.nianticproject.ingress.common.model.PlayerModel:
     getGuid: [k, $String]
     getCurrentXM: [d, J]
     getCurrentAP: [e, J]
+    getFaction: [h, $Faction]
 
   find:
     - [interface_of, false, true, $PlayerModelImpl]
@@ -91,6 +92,7 @@ com.nianticproject.ingress.common.model.PlayerModel:
     - [by_method, false, true, getGuid]
     - [by_method, false, true, getCurrentXM]
     - [by_method, false, true, getCurrentAP]
+    - [by_method, false, true, getFaction]
 
 com.nianticproject.ingress.common.model.PlayerModelImpl:
   super: $PlayerModel

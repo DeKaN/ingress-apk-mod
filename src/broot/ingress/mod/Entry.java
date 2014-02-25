@@ -34,6 +34,7 @@ import com.nianticproject.ingress.common.app.NemesisMemoryCacheFactory;
 import com.nianticproject.ingress.common.app.NemesisWorld;
 import com.nianticproject.ingress.common.assets.AssetFinder;
 import com.nianticproject.ingress.common.inventory.MenuControllerImpl;
+import com.nianticproject.ingress.common.model.PlayerModel;
 import com.nianticproject.ingress.common.missions.tutorial.TutorialDialog;
 import com.nianticproject.ingress.common.missions.tutorial.TutorialDialogNextListener;
 import com.nianticproject.ingress.common.scanner.ScannerActivity;
@@ -44,6 +45,7 @@ import com.nianticproject.ingress.common.ui.FormatUtils;
 import com.nianticproject.ingress.common.ui.elements.AvatarPlayerStatusBar;
 import com.nianticproject.ingress.common.ui.elements.PortalInfoDialog;
 import com.nianticproject.ingress.common.ui.widget.MenuTabId;
+import com.nianticproject.ingress.gameentity.components.ControllingTeam;
 import com.nianticproject.ingress.gameentity.components.ItemRarity;
 import com.nianticproject.ingress.gameentity.components.LocationE6;
 import com.nianticproject.ingress.gameentity.components.Portal;
@@ -240,8 +242,18 @@ public class Entry {
 			case NONE:
 				return false;
 			case WITHOUT_R8:
-				return !portal.resonatorLevelsForOwner(ComponentManager.getPlayerModel().getGuid()).contains(8)
-				        && portal.getLevel() < 8;
+				ControllingTeam team = (ControllingTeam)portal.getEntity().getComponent(ControllingTeam.class);
+				if(team == null)
+					return false;
+
+				PlayerModel player = ComponentManager.getPlayerModel();
+				if(team.getTeam() != player.getFaction())
+					return false;
+
+				if(portal.getLevel() == 8)
+					return false;
+
+				return !portal.resonatorLevelsForOwner(player.getGuid()).contains(8);
 			case L8:
 				return portal.getLevel() == 8;
 				// case WITH_KEYS:
