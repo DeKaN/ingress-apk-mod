@@ -300,26 +300,16 @@ public class Entry {
 		final Label.LabelStyle style = Mod.skin.get("portal-stats", Label.LabelStyle.class);
 		final Label.LabelStyle keyExistsStyle = Mod.skin.get("small-yellow", Label.LabelStyle.class);
 
-		final List<Cell> cells = new ArrayList<Cell>(t.getCells());
-		final List<Object> widgets = new ArrayList<Object>();
-		for (int i = 0; i < cells.size(); i++) {
-			widgets.add(cells.get(i).getWidget());
-		}
+		final List<Cell> cells = t.getCells();		
+		hideCellWidget(cells.get(3));
+		cells.get(3).height(0);
 
-		t.clear();
-
-		t.add(new Label("E:", style)).left();
-		t.add((Actor) widgets.get(1)).left().expandX();
 		final int keys = InventoryUtils.getNumberOfPortalKeys(dialog.portalComponent);
-		t.add(new Label(String.valueOf(keys), keys > 0 ? keyExistsStyle : style)).right();
-		t.add((Actor) widgets.get(2)).left();
+		t.add(new Label(String.valueOf(keys), keys > 0 ? keyExistsStyle : style)).right().expandX();
 		t.row();
 
-		t.add((Actor) widgets.get(4)).colspan(4).left().expandX();
-		t.row();
-		t.add(new Label("Dist.:", style)).colspan(2).left();
-		t.add(portalInfoDistLabel = new Label("", style)).colspan(2).left().expandX();
-		t.row();
+		t.add(new Label("Distance:", style)).left();
+		t.add(portalInfoDistLabel = new Label("", style)).left().expandX();
 	}
 
 	public static void PowerCubeDetailsUiCreator_onActionButtonsTableCreated(final Table t) {
