@@ -300,16 +300,16 @@ public class Entry {
 		final Label.LabelStyle style = Mod.skin.get("portal-stats", Label.LabelStyle.class);
 		final Label.LabelStyle keyExistsStyle = Mod.skin.get("small-yellow", Label.LabelStyle.class);
 
-		final List<Cell> cells = t.getCells();		
+		final List<Cell> cells = t.getCells();
 		hideCellWidget(cells.get(3));
 		cells.get(3).height(0);
 
 		final int keys = InventoryUtils.getNumberOfPortalKeys(dialog.portalComponent);
-		t.add(new Label(String.valueOf(keys), keys > 0 ? keyExistsStyle : style)).right().expandX();
+		t.add(new Label(String.valueOf(keys), keys > 0 ? keyExistsStyle : style)).colspan(3).right().expandX();
 		t.row();
 
 		t.add(new Label("Distance:", style)).left();
-		t.add(portalInfoDistLabel = new Label("", style)).left().expandX();
+		t.add(portalInfoDistLabel = new Label("", style)).colspan(2).left().expandX();
 	}
 
 	public static void PowerCubeDetailsUiCreator_onActionButtonsTableCreated(final Table t) {
