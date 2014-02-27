@@ -159,7 +159,7 @@ def main():
     edit.find_method_def('getEnableInviteNag')
     edit.find_line(r' return (v\d+)', where='down')
     edit.prepare_to_insert_before()
-    edit.add_invoke_entry('isInviteNagBlockEnabled', '', edit.vars[0])
+    edit.add_invoke_entry('isInviteNagEnabled', edit.vars[0], edit.vars[0])
     edit.save()
 
     edit = edit_cls('HackController')

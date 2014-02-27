@@ -56,7 +56,7 @@ broot.ingress.mod.Entry:
     shouldDrawScannerObject: [null, Z]
     vibrationEnabled: [null, Z]
     isPrivacyEnabled: [null, Z]
-    isInviteNagBlockEnabled: [null, Z]
+    isInviteNagEnabled: [null, Z, Z]
 
     CommsAdapter_getDateFormat: [null, $SimpleDateFormat]
 

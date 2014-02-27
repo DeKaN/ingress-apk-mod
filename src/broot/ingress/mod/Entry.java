@@ -119,8 +119,8 @@ public class Entry {
 		return Config.getBoolean(Pref.SimplifyInventoryItems);
 	}
 
-	public static boolean isInviteNagBlockEnabled() {
-		return Config.getBoolean(Pref.NeedInviteNagBlock);
+	public static boolean isInviteNagEnabled(boolean org) {
+		return org && (!Config.getBoolean(Pref.NeedInviteNagBlock));
 	}
 
 	public static boolean isPrivacyEnabled() {
