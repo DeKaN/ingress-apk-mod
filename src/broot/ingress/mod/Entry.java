@@ -305,10 +305,10 @@ public class Entry {
 		cells.get(3).height(0);
 
 		final int keys = InventoryUtils.getNumberOfPortalKeys(dialog.portalComponent);
-		t.add(new Label(String.valueOf(keys), keys > 0 ? keyExistsStyle : style)).colspan(3).right().expandX();
+		t.add(new Label(String.valueOf(keys), keys > 0 ? keyExistsStyle : style)).right().expandX();
 		t.row();
 
-		t.add(new Label("Distance:", style)).left();
+		t.add(new Label("Dist.:", style)).left();
 		t.add(portalInfoDistLabel = new Label("", style)).colspan(2).left().expandX();
 	}
 
